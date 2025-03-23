@@ -29,7 +29,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pokemon of filteredPokemonList" [class.table-success]="pokemon.caught">
+        <tr *ngFor="let pokemon of filteredPokemonList" [class.table-success]="pokemon.caught" (click)="toggleCaught(pokemon)">
           <td>{{ pokemon.id }}</td>
           <td>{{ pokemon.name | titlecase}}</td>
           <td>
