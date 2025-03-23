@@ -1,0 +1,44 @@
+<div class="container">
+  <form class="row mb-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="searchInput" class="form-label">Cerca Pokèmon</label>
+        <input type="text" class="form-control" id="searchInput" placeholder="Cerca Pokémon per nome o ID" [(ngModel)]="searchTerm" (input)="searchPokemon()" name="searchTerm">
+        <button class="btn btn-outline-secondary mt-2" type="button" (click)="clearSearch()">Pulisci</button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="caughtFilter" class="form-label">Filtra per stato:</label>
+        <select class="form-control" id="caughtFilter" [(ngModel)]="caughtFilter" (change)="filterCaught()" name="caughtFilter">
+          <option value="all">Tutti</option>
+          <option value="caught">Catturati</option>
+          <option value="uncaught">Non catturati</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="pokemonList">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Caught</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pokemon of filteredPokemonList" [class.table-success]="pokemon.caught">
+          <td>{{ pokemon.id }}</td>
+          <td>{{ pokemon.name | titlecase}}</td>
+          <td>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [checked]="pokemon.caught" (change)="toggleCaught(pokemon)">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

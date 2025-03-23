@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pokemon-tracker": {
+    "pokemon-collection-tracker-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "sass"
         }
       },
       "root": "",
@@ -17,14 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/pokemon-tracker",
+            "outputPath": "dist/pokemon-collection-tracker-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "sass",
             "assets": [
               {
                 "glob": "**/*",
@@ -32,12 +32,17 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.sass",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
+              "baseHref": "/pokemon-collection-tracker-app/",
               "budgets": [
                 {
                   "type": "initial",
@@ -64,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "pokemon-tracker:build:production"
+              "buildTarget": "pokemon-collection-tracker-app:build:production"
             },
             "development": {
-              "buildTarget": "pokemon-tracker:build:development"
+              "buildTarget": "pokemon-collection-tracker-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +88,7 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "sass",
             "assets": [
               {
                 "glob": "**/*",
@@ -91,7 +96,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.sass"
             ],
             "scripts": []
           }
