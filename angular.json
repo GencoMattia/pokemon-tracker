@@ -39,12 +39,12 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
-            "baseHref": "/pokemon-tracker/browser/"
+            "baseHref": "/pokemon-tracker/"
           },
           "configurations": {
             "production": {
               "outputPath": "docs",
-              "baseHref": "/pokemon-tracker/browser/",
+              "baseHref": "/pokemon-tracker/",
               "budgets": [
                 {
                   "type": "initial",
