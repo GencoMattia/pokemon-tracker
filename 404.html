@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      // Redirect all requests to index.html preserving the path
+      var path = window.location.pathname.replace(/\/pokemon-tracker/, '');
+      window.location.replace('/pokemon-tracker/index.html#' + path + window.location.search + window.location.hash);
+    </script>
+  </head>
+  <body>
+    <h1>Redirecting...</h1>
+  </body>
+</html>
