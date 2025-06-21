@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --configuration production && npx gh-pages -d docs",
+    "deploy": "npx gh-pages -d docs",
     "postbuild": "copy docs\\browser\\index.html docs\\index.html && xcopy /E /Y docs\\browser\\* docs\\",
     "build-deploy": "npm run build && npm run postbuild && npm run deploy"
   },
