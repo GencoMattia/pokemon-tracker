@@ -61,12 +61,11 @@ export default class PokemonTableComponent implements OnInit {
     localStorage.setItem(this.localStorageKey, JSON.stringify(this.pokemonList));
   }
 
-
   toggleCaught(pokemon: Pokemon): void {
     pokemon.caught = !pokemon.caught;
     console.log(`${pokemon.name} caught status: ${pokemon.caught}`);
     this.savePokemonToLocalStorage(); // Save after toggling
-    this.applyFilters();
+    this.applyFilters(); // Apply filters once
   }
 
   searchPokemon(): void {

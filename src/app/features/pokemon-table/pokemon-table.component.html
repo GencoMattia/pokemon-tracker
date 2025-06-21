@@ -20,6 +20,9 @@
   </form>
 
   <div *ngIf="pokemonList">
+    <div *ngIf="pokemonList.length === 0">
+      <p>Nessun Pokémon trovato. Prova a caricare la lista o modificare i filtri.</p>
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>
