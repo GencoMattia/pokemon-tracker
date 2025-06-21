@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ng build --prod && npx gh-pages -d docs/browser",
-    "postbuild": "cp docs/browser/index.html docs/index.html"
+    "postbuild": "cp docs/browser/index.html docs/index.html && cp -r docs/browser/* docs/"
   },
   "private": true,
   "dependencies": {
