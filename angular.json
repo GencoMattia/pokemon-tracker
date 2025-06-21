@@ -61,8 +61,7 @@
               "optimization": true,
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "buildOptimizer": true
+              "extractLicenses": true
             },
             "development": {
               "outputPath": "docs",
