@@ -1,34 +1,31 @@
 {
   "name": "pokemon-collection-tracker-app",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A modern Pokédex collection tracker built with Angular.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "npx gh-pages -d docs",
-    "postbuild": "copy /Y docs\\browser\\index.html docs\\index.html && xcopy /Y /S /I docs\\browser\\* docs\\ && copy 404.html docs\\404.html",
-    "build-deploy": "npm run build && npm run postbuild && npm run deploy"
+    "deploy": "npm run build && npx gh-pages -d docs --dotfiles"
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^16.0.0",
+    "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
-    "@angular/core": "^16.0.0",
-    "@angular/forms": "^16.0.0",
-    "@angular/platform-browser": "^16.0.0",
+    "@angular/core": "^19.2.0",
+    "@angular/forms": "^19.2.0",
+    "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
-    "@angular/router": "^16.0.0",
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "bootstrap": "^5.3.3",
-    "rxjs": "^7.0.0",
+    "@angular/router": "^19.2.0",
+    "rxjs": "^7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.4",
-    "@angular/cli": "^16.0.0",
+    "@angular/cli": "^19.2.4",
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.6.0",
@@ -37,7 +34,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "^5.0.0",
-    "gh-pages": "^5.0.0"
+    "typescript": "~5.7.0",
+    "gh-pages": "^6.1.0"
   }
 }

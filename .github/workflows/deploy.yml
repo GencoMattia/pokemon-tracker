@@ -3,35 +3,59 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - Priority  # O la tua branch principale (es. master)
+      - master
+  workflow_dispatch:
+
+# Allow the workflow to publish to GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one concurrent deployment; cancel in-progress runs of the same group.
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '19.2.0'  # O la versione di Node.js che stai usando
+          node-version: '20'
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build
-        run: npm run ng build pokemon-collection-tracker-app --configuration=production
+      - name: Build (production)
+        run: npm run build -- --configuration=production
 
-      - name: Remove unnecessary files
+      - name: Add SPA fallback (404) and .nojekyll
         run: |
-          rm -rf dist/pokemon-collection-tracker-app/.git
-          rm -rf dist/pokemon-collection-tracker-app/.github
-          rm -rf dist/pokemon-collection-tracker-app/src
-          rm -rf dist/pokemon-collection-tracker-app/node_modules
-          rm -rf dist/pokemon-collection-tracker-app/.angular
+          cp docs/browser/index.html docs/browser/404.html
+          touch docs/browser/.nojekyll
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: production  # Branch di destinazione
-          folder: dist/pokemon-collection-tracker-app  # Cartella di build
-          clean: true # Pulisce la branch prima del deploy
+          path: docs/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,69 +1,59 @@
-# PokemonCollectionTrackerApp
+# Pokédex Tracker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+A modern, single-page **Pokémon collection tracker** built with Angular 19.
+Browse the full Pokédex, mark the Pokémon you have caught, and watch your
+completion progress grow. Your progress is saved locally in the browser.
 
-## Development server
+🔴 **Live:** https://gencomattia.github.io/pokemon-tracker/
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- **Full Pokédex** loaded from the [PokeAPI](https://pokeapi.co) in a single
+  request (no per-Pokémon calls).
+- **Official artwork** for every Pokémon, served from the PokeAPI sprites CDN
+  with an automatic pixel-sprite fallback.
+- **Caught tracking** with a live progress bar, persisted in `localStorage`
+  independently of the Pokédex data.
+- **Instant search** by name or number and quick filters (all / caught /
+  missing).
+- **Infinite scroll** with lazy-loaded images for smooth performance across
+  1000+ Pokémon.
+- Responsive, dark-themed UI with no CSS framework dependency.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Tech stack
 
-## Code scaffolding
+- Angular 19 (standalone components + signals)
+- RxJS
+- Native SASS (no Bootstrap / Font Awesome)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Development
 
 ```bash
-ng build
+npm install
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open `http://localhost:4200/`.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Build
 
 ```bash
-ng test
+npm run build
 ```
 
-## Running end-to-end tests
+The production bundle is written to `docs/browser/`.
 
-For end-to-end (e2e) testing, run:
+## Tests
 
 ```bash
-ng e2e
+npm test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Deployment
 
-## Deployment to GitHub Pages
+Deployment is fully automated with **GitHub Actions**
+(`.github/workflows/deploy.yml`). On every push to `master` (or a manual
+run from the Actions tab), the app is built and published to GitHub Pages.
 
-To deploy the project to GitHub Pages, run:
-
-```bash
-npm run deploy
-```
-
-This will build the project and publish it to the `gh-pages` branch of your repository.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> The workflow self-configures Pages to use the "GitHub Actions" source, so no
+> manual repository setting is required beyond enabling Pages.

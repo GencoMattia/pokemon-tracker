@@ -1,50 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+// Global theme & resets for the Pokédex Tracker
 
-// Correggi selettori non validi
-.table > *
-  padding: 10px
-  border-bottom: 1px solid #ddd
+\:root
+  --bg: #0f1220
+  --bg-2: #171a2b
+  --surface: #1e2136
+  --surface-2: #2a2e48
+  --border: #333758
+  --text: #f4f5fb
+  --text-muted: #9aa0c0
+  --accent: #f34c4c
 
-.table-sm > *
-  padding: 5px
-  font-size: 0.9em
+*, *::before, *::after
+  box-sizing: border-box
 
-.table-bordered > *
-  border: 1px solid #ccc
-  background-color: #f9f9f9
-
-.form-floating > label
-  font-weight: bold
-  color: #555
-
-.btn-group > .btn
-  border-radius: 5px
-  background-color: #007bff
-  color: white
-  padding: 10px 15px
-  transition: background-color 0.3s ease
-
-.btn-group > .btn:hover
-  background-color: #0056b3
+html, body
+  margin: 0
+  padding: 0
 
 body
-  font-family: 'Arial', sans-serif
-  background-color: #f4f4f4
-  color: #333
+  min-height: 100vh
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif
+  color: var(--text)
+  background: radial-gradient(1200px 600px at 50% -10%, var(--bg-2), var(--bg)) fixed
+  -webkit-font-smoothing: antialiased
+  text-rendering: optimizeLegibility
 
-h1, h2, h3, h4, h5, h6
-  color: #444
+::selection
+  background: rgba(243, 76, 76, .35)
 
-a
-  color: #007bff
-  text-decoration: none
+::-webkit-scrollbar
+  width: 12px
+  height: 12px
 
-a:hover
-  text-decoration: underline
+::-webkit-scrollbar-thumb
+  background: var(--surface-2)
+  border-radius: 99px
+  border: 3px solid var(--bg)
 
-.footer
-  text-align: center
-  padding: 20px
-  background-color: #222
-  color: #fff
-  font-size: 0.8em
+::-webkit-scrollbar-thumb:hover
+  background: var(--border)

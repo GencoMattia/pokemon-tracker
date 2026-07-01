@@ -1,47 +1,90 @@
-<div class="container">
-  <form class="row mb-3">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="searchInput" class="form-label">Cerca Pokèmon</label>
-        <input type="text" class="form-control" id="searchInput" placeholder="Cerca Pokémon per nome o ID" [(ngModel)]="searchTerm" (input)="searchPokemon()" name="searchTerm">
-        <button class="btn btn-outline-secondary mt-2" type="button" (click)="clearSearch()">Pulisci</button>
-      </div>
+<header class="pokedex-header">
+  <div class="brand">
+    <span class="pokeball" aria-hidden="true"></span>
+    <div class="brand-text">
+      <h1>Pokédex Tracker</h1>
+      <p>Segna i Pokémon che hai catturato e completa la tua collezione.</p>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="caughtFilter" class="form-label">Filtra per stato:</label>
-        <select class="form-control" id="caughtFilter" [(ngModel)]="caughtFilter" (change)="filterCaught()" name="caughtFilter">
-          <option value="all">Tutti</option>
-          <option value="caught">Catturati</option>
-          <option value="uncaught">Non catturati</option>
-        </select>
-      </div>
-    </div>
-  </form>
-
-  <div *ngIf="pokemonList">
-    <div *ngIf="pokemonList.length === 0">
-      <p>Nessun Pokémon trovato. Prova a caricare la lista o modificare i filtri.</p>
-    </div>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Caught</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pokemon of filteredPokemonList" [class.table-success]="pokemon.caught" (click)="toggleCaught(pokemon)">
-          <td>{{ pokemon.id }}</td>
-          <td>{{ pokemon.name | titlecase}}</td>
-          <td>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" [checked]="pokemon.caught" (change)="toggleCaught(pokemon)">
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-</div>
+
+  <div class="progress" role="group" aria-label="Avanzamento collezione">
+    <div class="progress-stats">
+      <span class="count">{{ caughtCount() }} / {{ total() || '—' }}</span>
+      <span class="percent">{{ progress() }}%</span>
+    </div>
+    <div class="progress-bar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100" role="progressbar">
+      <div class="progress-fill" [style.width.%]="progress()"></div>
+    </div>
+    @if (caughtCount() > 0) {
+      <button type="button" class="link-btn" (click)="resetProgress()">Azzera progressi</button>
+    }
+  </div>
+</header>
+
+<section class="toolbar">
+  <div class="search">
+    <span class="search-icon" aria-hidden="true">🔍</span>
+    <input
+      type="search"
+      placeholder="Cerca per nome o numero…"
+      [ngModel]="searchTerm()"
+      (ngModelChange)="searchTerm.set($event)"
+      aria-label="Cerca Pokémon"
+    />
+    @if (searchTerm()) {
+      <button type="button" class="clear-btn" (click)="clearSearch()" aria-label="Pulisci ricerca">✕</button>
+    }
+  </div>
+
+  <div class="filters" role="tablist" aria-label="Filtra per stato">
+    <button type="button" [class.active]="caughtFilter() === 'all'" (click)="caughtFilter.set('all')">Tutti</button>
+    <button type="button" [class.active]="caughtFilter() === 'caught'" (click)="caughtFilter.set('caught')">Catturati</button>
+    <button type="button" [class.active]="caughtFilter() === 'uncaught'" (click)="caughtFilter.set('uncaught')">Mancanti</button>
+  </div>
+</section>
+
+@if (loading()) {
+  <div class="grid">
+    @for (i of [].constructor(12); track $index) {
+      <div class="card skeleton"></div>
+    }
+  </div>
+} @else if (error()) {
+  <div class="state error">
+    <p>😕 {{ error() }}</p>
+    <button type="button" class="primary-btn" (click)="load()">Riprova</button>
+  </div>
+} @else if (filtered().length === 0) {
+  <div class="state empty">
+    <p>Nessun Pokémon corrisponde ai filtri attuali.</p>
+  </div>
+} @else {
+  <div class="grid">
+    @for (pokemon of visiblePokemon(); track pokemon.id) {
+      <button
+        type="button"
+        class="card"
+        [class.caught]="isCaught(pokemon)"
+        (click)="toggleCaught(pokemon)"
+        [attr.aria-pressed]="isCaught(pokemon)"
+        [attr.aria-label]="(pokemon.name | titlecase) + (isCaught(pokemon) ? ', catturato' : ', non catturato')"
+      >
+        <span class="card-id">#{{ pokemon.id.toString().padStart(4, '0') }}</span>
+        <span class="caught-badge" aria-hidden="true">✓</span>
+        <img
+          class="artwork"
+          [src]="pokemon.artwork"
+          [alt]="pokemon.name | titlecase"
+          loading="lazy"
+          decoding="async"
+          (error)="onArtworkError($event, pokemon)"
+        />
+        <span class="card-name">{{ pokemon.name | titlecase }}</span>
+      </button>
+    }
+  </div>
+
+  @if (hasMore()) {
+    <div #sentinel class="sentinel" aria-hidden="true"></div>
+  }
+}
