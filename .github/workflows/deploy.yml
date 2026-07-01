@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      # Temporary: allows publishing this branch before it is merged.
+      - claude/code-review-app-optimization-j6vczh
   workflow_dispatch:
 
 # Allow the workflow to publish to GitHub Pages.
